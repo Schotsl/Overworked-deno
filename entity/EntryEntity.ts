@@ -18,7 +18,7 @@ export default class LocationEntity extends BaseEntity {
   public weight = new SmallColumn("weight", false);
   public distance = new SmallColumn("distance", false);
 
-  public upgrade = new BooleanColumn("upgrade", false, 0);
+  public upgrade = new BooleanColumn("upgrade", false, false);
 
   constructor() {
     super();
