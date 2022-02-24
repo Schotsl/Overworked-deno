@@ -1,17 +1,13 @@
 import { Router } from "https://deno.land/x/oak@v10.1.0/mod.ts";
 
-import ScheduleEntity from "../entity/ScheduleEntity.ts";
-import ScheduleCollection from "../collection/ScheduleCollection.ts";
+import ScheduleController from "../controller/ScheduleController.ts";
 
-import GeneralController from "https://raw.githubusercontent.com/Schotsl/Uberdeno/main/controller/GeneralController.ts";
 import mysqlClient from "https://raw.githubusercontent.com/Schotsl/Uberdeno/main/services/mysql.ts";
 
 const scheduleRouter = new Router({ prefix: "/v1/schedule" });
-const scheduleController = new GeneralController(
+const scheduleController = new ScheduleController(
   mysqlClient,
   "schedule",
-  ScheduleEntity,
-  ScheduleCollection,
 );
 
 const get = scheduleController.getCollection.bind(scheduleController);
