@@ -6,6 +6,7 @@ import {
   postHandler,
 } from "https://raw.githubusercontent.com/Schotsl/Uberdeno/main/middleware.ts";
 
+import scheduleRouter from "./router/scheduleRouter.ts";
 import locationRouter from "./router/locationRouter.ts";
 import machineRouter from "./router/machineRouter.ts";
 import personRouter from "./router/personRouter.ts";
@@ -19,11 +20,13 @@ application.use(errorHandler);
 application.use(limitHandler);
 application.use(postHandler);
 
+application.use(scheduleRouter.routes());
 application.use(locationRouter.routes());
 application.use(machineRouter.routes());
 application.use(personRouter.routes());
 application.use(entryRouter.routes());
 
+application.use(scheduleRouter.allowedMethods());
 application.use(locationRouter.allowedMethods());
 application.use(machineRouter.allowedMethods());
 application.use(personRouter.allowedMethods());
