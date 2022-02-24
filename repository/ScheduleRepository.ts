@@ -32,19 +32,26 @@ export default class ScheduleRepository implements InterfaceRepository {
     person: string,
     day: number,
   ): Promise<ScheduleCollection> {
-    const fetch = "SELECT HEX(uuid) AS uuid, `day`, HEX(person) AS person, HEX(machine) AS machine, created, updated FROM schedule WHERE person = UNHEX(REPLACE(?, '-', '')) AND `day` = ? ORDER BY created DESC LIMIT ? OFFSET ?";
-    const count = "SELECT COUNT(uuid) AS total FROM schedule WHERE person = UNHEX(REPLACE(?, '-', '')) AND `day` = ?"
+    const fetch =
+      "SELECT HEX(uuid) AS uuid, `day`, HEX(person) AS person, HEX(machine) AS machine, created, updated FROM schedule WHERE person = UNHEX(REPLACE(?, '-', '')) AND `day` = ? ORDER BY created DESC LIMIT ? OFFSET ?";
+    const count =
+      "SELECT COUNT(uuid) AS total FROM schedule WHERE person = UNHEX(REPLACE(?, '-', '')) AND `day` = ?";
 
     const promises = [
       this.mysqlClient.execute(fetch, [person, day, limit, offset]),
-      this.mysqlClient.execute(count, [person, day])
+      this.mysqlClient.execute(count, [person, day]),
     ];
 
     const data = await Promise.all(promises);
     const rows = data[0].rows!;
     const total = data[1].rows![0].total;
 
-    return this.generalMapper.mapCollection(rows, offset, limit, total) as ScheduleCollection;
+    return this.generalMapper.mapCollection(
+      rows,
+      offset,
+      limit,
+      total,
+    ) as ScheduleCollection;
   }
 
   public async removeObject(uuid: string): Promise<void> {

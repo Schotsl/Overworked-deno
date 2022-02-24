@@ -7,7 +7,11 @@ import {
 } from "https://deno.land/x/oak@v10.1.0/mod.ts";
 import { validateUUID } from "https://raw.githubusercontent.com/Schotsl/Uberdeno/main/validation/string.ts";
 import { validateSmall } from "https://raw.githubusercontent.com/Schotsl/Uberdeno/main/validation/number.ts";
-import { generateColumns, populateInstance, renderREST } from "https://raw.githubusercontent.com/Schotsl/Uberdeno/main/helper.ts";
+import {
+  generateColumns,
+  populateInstance,
+  renderREST,
+} from "https://raw.githubusercontent.com/Schotsl/Uberdeno/main/helper.ts";
 
 import ScheduleEntity from "../entity/ScheduleEntity.ts";
 import ScheduleRepository from "../repository/ScheduleRepository.ts";
@@ -31,7 +35,7 @@ export default class ScheduleController implements InterfaceController {
   async getCollection(
     { response, request, state }: {
       response: Response;
-      request: Request,
+      request: Request;
       state: State;
     },
   ) {
@@ -43,7 +47,12 @@ export default class ScheduleController implements InterfaceController {
     validateUUID(person, `person`);
     validateSmall(day, `day`);
 
-    const result = await this.scheduleRepository.getCollection(offset, limit, person, day);
+    const result = await this.scheduleRepository.getCollection(
+      offset,
+      limit,
+      person,
+      day,
+    );
     const parsed = renderREST(result);
 
     response.body = parsed;
