@@ -1,4 +1,5 @@
 import {
+  BooleanColumn,
   SmallColumn,
   UUIDColumn,
 } from "https://raw.githubusercontent.com/Schotsl/Uberdeno/main/other/Columns.ts";
@@ -16,6 +17,8 @@ export default class LocationEntity extends BaseEntity {
   public speed = new SmallColumn("speed", false);
   public weight = new SmallColumn("weight", false);
   public distance = new SmallColumn("distance", false);
+
+  public upgrade = new BooleanColumn("upgrade", false, 0);
 
   constructor() {
     super();
