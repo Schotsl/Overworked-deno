@@ -12,7 +12,7 @@ const projectController = new GeneralController(
 
 const projectRouter = new GeneralRouter(
   projectController,
-  "machine"
+  "machine",
 );
 
 export default projectRouter.router;

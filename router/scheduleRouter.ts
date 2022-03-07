@@ -8,7 +8,7 @@ const scheduleController = new ScheduleController(
 
 const projectRouter = new GeneralRouter(
   scheduleController,
-  "schedule"
+  "schedule",
 );
 
 export default projectRouter.router;

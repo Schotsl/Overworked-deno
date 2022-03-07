@@ -55,7 +55,7 @@ export default class ScheduleController implements InterfaceController {
     response.body = parsed;
   }
 
-  async removeObject(
+  removeObject(
     { response, params }: {
       response: Response;
       params: { uuid: string };
@@ -64,7 +64,7 @@ export default class ScheduleController implements InterfaceController {
     return this.generalController.removeObject({ response, params });
   }
 
-  async addObject(
+  addObject(
     { request, response }: { request: Request; response: Response },
   ) {
     return this.generalController.addObject({ request, response });
