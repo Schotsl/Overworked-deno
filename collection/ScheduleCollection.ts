@@ -1,4 +1,4 @@
-import BaseCollection from "https://raw.githubusercontent.com/Schotsl/Uberdeno/main/collection/BaseCollection.ts";
+import BaseCollection from "../../Uberdeno/collection/BaseCollection.ts";
 import ScheduleEntity from "../entity/ScheduleEntity.ts";
 
 export default class ScheduleCollection extends BaseCollection {

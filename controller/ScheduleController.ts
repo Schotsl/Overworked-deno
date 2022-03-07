@@ -1,41 +1,38 @@
-import { Client } from "https://deno.land/x/mysql@v2.10.2/mod.ts";
-import { ColumnInfo } from "https://raw.githubusercontent.com/Schotsl/Uberdeno/main/types.ts";
 import {
   Request,
   Response,
   State,
 } from "https://deno.land/x/oak@v10.1.0/mod.ts";
-import { validateUUID } from "https://raw.githubusercontent.com/Schotsl/Uberdeno/main/validation/string.ts";
-import { validateSmall } from "https://raw.githubusercontent.com/Schotsl/Uberdeno/main/validation/number.ts";
-import {
-  generateColumns,
-  populateInstance,
-  renderREST,
-} from "https://raw.githubusercontent.com/Schotsl/Uberdeno/main/helper.ts";
+
+import { renderREST } from "../../Uberdeno/helper.ts";
+import { validateUUID } from "../../Uberdeno/validation/string.ts";
+import { validateSmall } from "../../Uberdeno/validation/number.ts";
 
 import ScheduleEntity from "../entity/ScheduleEntity.ts";
+import GeneralController from "../../Uberdeno/controller/GeneralController.ts";
+import ScheduleCollection from "../collection/ScheduleCollection.ts";
 import ScheduleRepository from "../repository/ScheduleRepository.ts";
-import InterfaceController from "https://raw.githubusercontent.com/Schotsl/Uberdeno/main/controller/InterfaceController.ts";
+import InterfaceController from "../../Uberdeno/controller/InterfaceController.ts";
 
 export default class ScheduleController implements InterfaceController {
-  private scheduleColumns: ColumnInfo[] = [];
+  private generalController: GeneralController;
   private scheduleRepository: ScheduleRepository;
 
   constructor(
-    mysqlClient: Client,
     name: string,
   ) {
-    this.scheduleColumns = generateColumns(ScheduleEntity);
-    this.scheduleRepository = new ScheduleRepository(
-      mysqlClient,
+    this.scheduleRepository = new ScheduleRepository(name);
+    this.generalController = new GeneralController(
       name,
+      ScheduleEntity,
+      ScheduleCollection,
     );
   }
 
   async getCollection(
-    { response, request, state }: {
-      response: Response;
+    { request, response, state }: {
       request: Request;
+      response: Response;
       state: State;
     },
   ) {
@@ -59,31 +56,17 @@ export default class ScheduleController implements InterfaceController {
   }
 
   async removeObject(
-    { params, response }: {
-      request: Request;
-      params: { uuid: string };
+    { response, params }: {
       response: Response;
+      params: { uuid: string };
     },
   ) {
-    const uuid = params.uuid;
-    await this.scheduleRepository.removeObject(uuid);
-
-    response.status = 204;
+    return this.generalController.removeObject({ response, params });
   }
 
   async addObject(
     { request, response }: { request: Request; response: Response },
   ) {
-    const body = await request.body();
-    const value = await body.value;
-    const object = new ScheduleEntity();
-    delete value.uuid;
-
-    populateInstance(value, this.scheduleColumns, object);
-
-    const result = await this.scheduleRepository.addObject(object);
-    const parsed = renderREST(result);
-
-    response.body = parsed;
+    return this.generalController.addObject({ request, response });
   }
 }

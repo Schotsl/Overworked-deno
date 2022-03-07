@@ -1,25 +1,18 @@
-import { Router } from "https://deno.land/x/oak@v10.1.0/mod.ts";
+import GeneralRouter from "../../Uberdeno/router/GeneralRouter.ts";
+import GeneralController from "../../Uberdeno/controller/GeneralController.ts";
 
 import LocationEntity from "../entity/LocationEntity.ts";
 import LocationCollection from "../collection/LocationCollection.ts";
 
-import GeneralController from "https://raw.githubusercontent.com/Schotsl/Uberdeno/main/controller/GeneralController.ts";
-import mysqlClient from "https://raw.githubusercontent.com/Schotsl/Uberdeno/main/services/mysql.ts";
-
-const locationRouter = new Router({ prefix: "/v1/location" });
-const locationController = new GeneralController(
-  mysqlClient,
+const projectController = new GeneralController(
   "location",
   LocationEntity,
   LocationCollection,
 );
 
-const get = locationController.getCollection.bind(locationController);
-const post = locationController.addObject.bind(locationController);
-const remove = locationController.removeObject.bind(locationController);
+const projectRouter = new GeneralRouter(
+  projectController,
+  "location"
+);
 
-locationRouter.get("/", get);
-locationRouter.post("/", post);
-locationRouter.delete("/:uuid", remove);
-
-export default locationRouter;
+export default projectRouter.router;
