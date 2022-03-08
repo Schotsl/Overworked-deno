@@ -11,13 +11,8 @@ export default class LocationEntity extends BaseEntity {
   public machine = new UUIDColumn("machine");
   public location = new UUIDColumn("location");
 
-  public time = new SmallColumn("time", false);
-  public reps = new SmallColumn("reps", false);
-  public sets = new SmallColumn("sets", false);
   public speed = new SmallColumn("speed", false);
   public weight = new SmallColumn("weight", false);
-  public distance = new SmallColumn("distance", false);
-
   public upgrade = new BooleanColumn("upgrade", false, false);
 
   constructor() {
