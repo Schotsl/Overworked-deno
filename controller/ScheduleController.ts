@@ -55,6 +55,15 @@ export default class ScheduleController implements InterfaceController {
     response.body = parsed;
   }
 
+  getObject(
+    { response, params }: {
+      response: Response;
+      params: { uuid: string };
+    },
+  ) {
+    return this.generalController.getObject({ response, params });
+  }
+
   removeObject(
     { response, params }: {
       response: Response;
