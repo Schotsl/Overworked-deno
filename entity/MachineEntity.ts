@@ -1,4 +1,8 @@
-import { UUIDColumn, VarcharColumn, SmallColumn } from "../../Uberdeno/other/Columns.ts";
+import {
+  SmallColumn,
+  UUIDColumn,
+  VarcharColumn,
+} from "../../Uberdeno/other/Columns.ts";
 
 import BaseEntity from "../../Uberdeno/entity/BaseEntity.ts";
 
