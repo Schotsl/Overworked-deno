@@ -26,16 +26,17 @@ export default class EntryRepository implements InterfaceRepository {
     offset: number,
     limit: number,
     person: string,
+    machine: string,
     location: string,
   ): Promise<EntryCollection> {
     const fetch =
-      "SELECT HEX(uuid) AS uuid, HEX(person) AS person, HEX(machine) AS machine, HEX(location) AS location, speed, weight, upgrade, created, updated FROM entry WHERE person = UNHEX(REPLACE(?, '-', '')) AND location = UNHEX(REPLACE(?, '-', '')) ORDER BY created DESC LIMIT ? OFFSET ?";
+      "SELECT HEX(uuid) AS uuid, HEX(person) AS person, HEX(machine) AS machine, HEX(location) AS location, speed, weight, upgrade, created, updated FROM entry WHERE person = UNHEX(REPLACE(?, '-', '')) AND machine = UNHEX(REPLACE(?, '-', '')) AND location = UNHEX(REPLACE(?, '-', '')) ORDER BY created DESC LIMIT ? OFFSET ?";
     const count =
-      "SELECT COUNT(uuid) AS total FROM entry WHERE person = UNHEX(REPLACE(?, '-', '')) AND location = UNHEX(REPLACE(?, '-', ''))";
+      "SELECT COUNT(uuid) AS total FROM entry WHERE person = UNHEX(REPLACE(?, '-', '')) AND machine = UNHEX(REPLACE(?, '-', '')) AND location = UNHEX(REPLACE(?, '-', ''))";
 
     const promises = [
-      mysqlClient.execute(fetch, [person, location, limit, offset]),
-      mysqlClient.execute(count, [person, location]),
+      mysqlClient.execute(fetch, [person, machine, location, limit, offset]),
+      mysqlClient.execute(count, [person, machine, location]),
     ];
 
     const data = await Promise.all(promises);

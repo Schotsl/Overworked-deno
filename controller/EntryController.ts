@@ -38,15 +38,18 @@ export default class EntryController implements InterfaceController {
     const { offset, limit } = state;
 
     const person = request.url.searchParams.get(`person`)!;
+    const machine = request.url.searchParams.get(`machine`)!;
     const location = request.url.searchParams.get(`location`)!;
 
     validateUUID(person, `person`);
+    validateUUID(machine, `machine`);
     validateUUID(location, `location`);
 
     const result = await this.entryRepository.getCollection(
       offset,
       limit,
       person,
+      machine,
       location,
     );
     const parsed = renderREST(result);
