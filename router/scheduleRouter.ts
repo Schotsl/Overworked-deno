@@ -1,4 +1,4 @@
-import GeneralRouter from "../../Uberdeno/router/GeneralRouter.ts";
+import GeneralRouter from "https://raw.githubusercontent.com/Schotsl/Uberdeno/main/router/GeneralRouter.ts";
 
 import ScheduleController from "../controller/ScheduleController.ts";
 

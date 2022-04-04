@@ -1,4 +1,4 @@
-import BaseCollection from "../../Uberdeno/collection/BaseCollection.ts";
+import BaseCollection from "https://raw.githubusercontent.com/Schotsl/Uberdeno/main/collection/BaseCollection.ts";
 import PersonEntity from "../entity/PersonEntity.ts";
 
 export default class HistoryCollection extends BaseCollection {

@@ -1,11 +1,11 @@
-import { UUIDColumn } from "../../Uberdeno/other/Columns.ts";
+import { UUIDColumn } from "https://raw.githubusercontent.com/Schotsl/Uberdeno/main/other/Columns.ts";
 
-import mysqlClient from "../../Uberdeno/services/mysqlClient.ts";
-import GeneralMapper from "../../Uberdeno/mapper/GeneralMapper.ts";
+import mysqlClient from "https://raw.githubusercontent.com/Schotsl/Uberdeno/main/services/mysqlClient.ts";
+import GeneralMapper from "https://raw.githubusercontent.com/Schotsl/Uberdeno/main/mapper/GeneralMapper.ts";
 import ScheduleEntity from "../entity/ScheduleEntity.ts";
-import GeneralRepository from "../../Uberdeno/repository/GeneralRepository.ts";
+import GeneralRepository from "https://raw.githubusercontent.com/Schotsl/Uberdeno/main/repository/GeneralRepository.ts";
 import ScheduleCollection from "../collection/ScheduleCollection.ts";
-import InterfaceRepository from "../../Uberdeno/repository/InterfaceRepository.ts";
+import InterfaceRepository from "https://raw.githubusercontent.com/Schotsl/Uberdeno/main/repository/InterfaceRepository.ts";
 
 export default class ScheduleRepository implements InterfaceRepository {
   private generalMapper: GeneralMapper;

@@ -2,9 +2,9 @@ import {
   BooleanColumn,
   SmallColumn,
   UUIDColumn,
-} from "../../Uberdeno/other/Columns.ts";
+} from "https://raw.githubusercontent.com/Schotsl/Uberdeno/main/other/Columns.ts";
 
-import BaseEntity from "../../Uberdeno/entity/BaseEntity.ts";
+import BaseEntity from "https://raw.githubusercontent.com/Schotsl/Uberdeno/main/entity/BaseEntity.ts";
 
 export default class LocationEntity extends BaseEntity {
   public person = new UUIDColumn("person");

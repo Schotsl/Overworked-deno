@@ -2,9 +2,9 @@ import {
   SmallColumn,
   UUIDColumn,
   VarcharColumn,
-} from "../../Uberdeno/other/Columns.ts";
+} from "https://raw.githubusercontent.com/Schotsl/Uberdeno/main/other/Columns.ts";
 
-import BaseEntity from "../../Uberdeno/entity/BaseEntity.ts";
+import BaseEntity from "https://raw.githubusercontent.com/Schotsl/Uberdeno/main/entity/BaseEntity.ts";
 
 export default class MachineEntity extends BaseEntity {
   public image = new UUIDColumn("image", false);
