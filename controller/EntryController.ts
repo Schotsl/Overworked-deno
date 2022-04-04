@@ -83,16 +83,24 @@ export default class EntryController implements InterfaceController {
     const body = await request.body();
     const value = await body.value;
 
-    if (typeof value.time === "undefined" && typeof value.weight === "undefined") {
-      throw new CustomError("Property 'time' or 'weight' should be provided", 400,
+    if (
+      typeof value.time === "undefined" && typeof value.weight === "undefined"
+    ) {
+      throw new CustomError(
+        "Property 'time' or 'weight' should be provided",
+        400,
       );
     }
 
-    if (typeof value.time !== "undefined" && typeof value.weight !== "undefined") {
-      throw new CustomError("Property 'time' and 'weight' can't both be used in the same entry.", 400,
+    if (
+      typeof value.time !== "undefined" && typeof value.weight !== "undefined"
+    ) {
+      throw new CustomError(
+        "Property 'time' and 'weight' can't both be used in the same entry.",
+        400,
       );
     }
-    
+
     await this.generalController.addObject({ request, response, value });
   }
 }
