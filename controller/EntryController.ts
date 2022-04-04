@@ -5,6 +5,7 @@ import {
 } from "https://deno.land/x/oak@v10.1.0/mod.ts";
 
 import { renderREST } from "https://raw.githubusercontent.com/Schotsl/Uberdeno/main/helper.ts";
+import { CustomError } from "https://raw.githubusercontent.com/Schotsl/Uberdeno/main/errors.ts";
 import { validateUUID } from "https://raw.githubusercontent.com/Schotsl/Uberdeno/main/validation/string.ts";
 
 import EntryEntity from "../entity/EntryEntity.ts";
@@ -76,9 +77,22 @@ export default class EntryController implements InterfaceController {
     return this.generalController.removeObject({ response, params });
   }
 
-  addObject(
+  async addObject(
     { request, response }: { request: Request; response: Response },
   ) {
-    return this.generalController.addObject({ request, response });
+    const body = await request.body();
+    const value = await body.value;
+
+    if (typeof value.time === "undefined" && typeof value.weight === "undefined") {
+      throw new CustomError("Property 'time' or 'weight' should be provided", 400,
+      );
+    }
+
+    if (typeof value.time !== "undefined" && typeof value.weight !== "undefined") {
+      throw new CustomError("Property 'time' and 'weight' can't both be used in the same entry.", 400,
+      );
+    }
+    
+    await this.generalController.addObject({ request, response, value });
   }
 }
