@@ -27,16 +27,23 @@ export default class EntryRepository implements InterfaceRepository {
     limit: number,
     person: string,
     machine: string,
-    location: string,
+    location?: string,
   ): Promise<EntryCollection> {
-    const fetch =
-      "SELECT HEX(uuid) AS uuid, HEX(person) AS person, HEX(machine) AS machine, HEX(location) AS location, speed, weight, upgrade, created, updated FROM entry WHERE person = UNHEX(REPLACE(?, '-', '')) AND machine = UNHEX(REPLACE(?, '-', '')) AND location = UNHEX(REPLACE(?, '-', '')) ORDER BY created DESC LIMIT ? OFFSET ?";
-    const count =
-      "SELECT COUNT(uuid) AS total FROM entry WHERE person = UNHEX(REPLACE(?, '-', '')) AND machine = UNHEX(REPLACE(?, '-', '')) AND location = UNHEX(REPLACE(?, '-', ''))";
+    const fetch = location === null
+      ? "SELECT HEX(uuid) AS uuid, HEX(person) AS person, HEX(machine) AS machine, HEX(location) AS location, speed, weight, upgrade, created, updated FROM entry WHERE person = UNHEX(REPLACE(?, '-', '')) AND machine = UNHEX(REPLACE(?, '-', '')) ORDER BY created DESC LIMIT ? OFFSET ?"
+      : "SELECT HEX(uuid) AS uuid, HEX(person) AS person, HEX(machine) AS machine, HEX(location) AS location, speed, weight, upgrade, created, updated FROM entry WHERE person = UNHEX(REPLACE(?, '-', '')) AND machine = UNHEX(REPLACE(?, '-', '')) AND location = UNHEX(REPLACE(?, '-', '')) ORDER BY created DESC LIMIT ? OFFSET ?";
+    
+      const count = location === null
+      ? "SELECT COUNT(uuid) AS total FROM entry WHERE person = UNHEX(REPLACE(?, '-', '')) AND machine = UNHEX(REPLACE(?, '-', ''))"
+      : "SELECT COUNT(uuid) AS total FROM entry WHERE person = UNHEX(REPLACE(?, '-', '')) AND machine = UNHEX(REPLACE(?, '-', '')) AND location = UNHEX(REPLACE(?, '-', ''))";
+    
+      const params = location === null
+      ? [person, machine]
+      : [person, machine, location];
 
     const promises = [
-      mysqlClient.execute(fetch, [person, machine, location, limit, offset]),
-      mysqlClient.execute(count, [person, machine, location]),
+      mysqlClient.execute(fetch, [...params, limit, offset]),
+      mysqlClient.execute(count, [...params]),
     ];
 
     const data = await Promise.all(promises);

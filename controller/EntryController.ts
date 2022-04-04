@@ -43,7 +43,7 @@ export default class EntryController implements InterfaceController {
 
     validateUUID(person, `person`);
     validateUUID(machine, `machine`);
-    validateUUID(location, `location`);
+    validateUUID(location, `location`, false);
 
     const result = await this.entryRepository.getCollection(
       offset,
@@ -52,6 +52,7 @@ export default class EntryController implements InterfaceController {
       machine,
       location,
     );
+
     const parsed = renderREST(result);
 
     response.body = parsed;
