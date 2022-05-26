@@ -32,7 +32,7 @@ export async function authorizationHandler(
     const { payload } = await jose.jwtVerify(token, JWKS, {
       issuer: [
         "accounts.google.com",
-        "https://accounts.google.com"
+        "https://accounts.google.com",
       ],
       maxTokenAge: 999999999,
     });
