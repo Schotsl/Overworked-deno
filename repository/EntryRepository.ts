@@ -29,8 +29,14 @@ export default class EntryRepository implements InterfaceRepository {
     persons: string[],
   ): Promise<EntryCollection> {
     const list = persons.map(() => "UNHEX(REPLACE(?, '-', ''))");
-    const fetch = `SELECT HEX(uuid) AS uuid, HEX(person) AS person, HEX(machine) AS machine, HEX(location) AS location, speed, weight, upgrade, created, updated FROM entry WHERE person IN (${list.join(',')}) ORDER BY created DESC LIMIT ? OFFSET ?`;
-    const count = `SELECT COUNT(uuid) AS total FROM entry WHERE person IN (${list.join(',')})`
+    const fetch =
+      `SELECT HEX(uuid) AS uuid, HEX(person) AS person, HEX(machine) AS machine, HEX(location) AS location, speed, weight, upgrade, created, updated FROM entry WHERE person IN (${
+        list.join(",")
+      }) ORDER BY created DESC LIMIT ? OFFSET ?`;
+
+    const count = `SELECT COUNT(uuid) AS total FROM entry WHERE person IN (${
+      list.join(",")
+    })`;
 
     const promises = [
       mysqlClient.execute(fetch, [...persons, limit, offset]),

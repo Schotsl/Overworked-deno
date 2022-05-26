@@ -40,7 +40,7 @@ export default class EntryController implements InterfaceController {
     const { offset, limit } = state;
 
     const params = request.url.searchParams;
-    const persons = params.get(`persons`)?.split(',');
+    const persons = params.get(`persons`)?.split(",");
 
     // TODO: Implement validation of persons array
 

@@ -1,13 +1,13 @@
 import * as jose from "https://deno.land/x/jose@v4.8.1/index.ts";
 import { Middleware } from "https://deno.land/x/oak@v10.6.0/mod.ts";
 import {
-  MissingAuthentication,
   InvalidAuthentication,
+  MissingAuthentication,
 } from "https://raw.githubusercontent.com/Schotsl/Uberdeno/main/errors.ts";
 
 export const authenticationMiddleware: Middleware = async (
   { request, state },
-  next
+  next,
 ) => {
   const token = request.headers.get("Authorization")?.split(" ")[1];
 
@@ -17,7 +17,7 @@ export const authenticationMiddleware: Middleware = async (
 
   try {
     const JWKS = jose.createRemoteJWKSet(
-      new URL("https://www.googleapis.com/oauth2/v3/certs")
+      new URL("https://www.googleapis.com/oauth2/v3/certs"),
     );
 
     const { payload } = await jose.jwtVerify(token, JWKS, {
