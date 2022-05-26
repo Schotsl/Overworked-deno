@@ -1,5 +1,5 @@
 import { UUIDColumn } from "https://raw.githubusercontent.com/Schotsl/Uberdeno/main/other/Columns.ts";
-
+import { MissingImplementation } from "https://raw.githubusercontent.com/Schotsl/Uberdeno/main/errors.ts";
 import mysqlClient from "https://raw.githubusercontent.com/Schotsl/Uberdeno/main/services/mysqlClient.ts";
 import GeneralMapper from "https://raw.githubusercontent.com/Schotsl/Uberdeno/main/mapper/GeneralMapper.ts";
 import EntryEntity from "../entity/EntryEntity.ts";
@@ -64,6 +64,10 @@ export default class EntryRepository implements InterfaceRepository {
 
   public async addObject(object: EntryEntity): Promise<EntryEntity> {
     return await this.generalRepository.addObject(object) as EntryEntity;
+  }
+
+  public updateObject(): Promise<EntryEntity> {
+    throw new MissingImplementation();
   }
 
   public async getObject(uuid: UUIDColumn): Promise<EntryEntity> {
