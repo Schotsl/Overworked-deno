@@ -1,10 +1,5 @@
-import { oakCors } from "https://deno.land/x/cors@v1.2.2/mod.ts";
-import { Application } from "https://deno.land/x/oak@v10.6.0/mod.ts";
-import {
-  errorHandler,
-  limitHandler,
-  postHandler,
-} from "https://raw.githubusercontent.com/Schotsl/Uberdeno/main/middleware.ts";
+import Server from "https://raw.githubusercontent.com/Schotsl/Uberdeno/main/other/Server.ts";
+
 import { authenticationHandler } from "./middleware.ts";
 
 import scheduleRouter from "./router/scheduleRouter.ts";
@@ -14,28 +9,15 @@ import friendsRouter from "./router/entryRouter.ts";
 import personRouter from "./router/personRouter.ts";
 import entryRouter from "./router/entryRouter.ts";
 
-const application = new Application();
+const server = new Server();
 
-application.use(oakCors());
-application.use(errorHandler);
-application.use(limitHandler);
-application.use(postHandler);
-application.use(authenticationHandler);
+server.use(authenticationHandler);
 
-application.use(scheduleRouter.routes());
-application.use(locationRouter.routes());
-application.use(machineRouter.routes());
-application.use(friendsRouter.routes());
-application.use(personRouter.routes());
-application.use(entryRouter.routes());
+server.add(scheduleRouter);
+server.add(locationRouter);
+server.add(machineRouter);
+server.add(friendsRouter);
+server.add(personRouter);
+server.add(entryRouter);
 
-application.use(scheduleRouter.allowedMethods());
-application.use(locationRouter.allowedMethods());
-application.use(machineRouter.allowedMethods());
-application.use(friendsRouter.allowedMethods());
-application.use(personRouter.allowedMethods());
-application.use(entryRouter.allowedMethods());
-
-// TODO: Switch to Uberdeno provided application
-
-application.listen({ port: 8000 });
+server.listen();
