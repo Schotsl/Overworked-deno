@@ -6,6 +6,7 @@ import {
 
 import { renderREST } from "https://raw.githubusercontent.com/Schotsl/Uberdeno/main/helper.ts";
 import { CustomError } from "https://raw.githubusercontent.com/Schotsl/Uberdeno/main/errors.ts";
+import { validateUUID } from "https://raw.githubusercontent.com/Schotsl/Uberdeno/main/validation/string.ts";
 
 import EntryEntity from "../entity/EntryEntity.ts";
 import EntryCollection from "../collection/EntryCollection.ts";
@@ -40,7 +41,7 @@ export default class EntryController implements InterfaceController {
     const params = request.url.searchParams;
     const persons = params.get(`persons`)?.split(",");
 
-    // TODO: Implement validation of persons array
+    validateUUID(persons, "persons");
 
     // TODO: Check if all persons are friends
 

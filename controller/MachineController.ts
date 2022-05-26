@@ -1,9 +1,11 @@
-import { renderREST } from "https://raw.githubusercontent.com/Schotsl/Uberdeno/main/helper.ts";
 import {
   Request,
   Response,
   State,
 } from "https://deno.land/x/oak@v10.6.0/mod.ts";
+
+import { renderREST } from "https://raw.githubusercontent.com/Schotsl/Uberdeno/main/helper.ts";
+import { validateUUID } from "https://raw.githubusercontent.com/Schotsl/Uberdeno/main/validation/string.ts";
 
 import MachineEntity from "../entity/MachineEntity.ts";
 import MachineCollection from "../collection/MachineCollection.ts";
@@ -38,7 +40,7 @@ export default class MachineController implements InterfaceController {
     const params = request.url.searchParams;
     const persons = params.get(`persons`)?.split(",");
 
-    // TODO: Implement validation of persons array
+    validateUUID(persons, "persons");
 
     // TODO: Check if all persons are friends
 

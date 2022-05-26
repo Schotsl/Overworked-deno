@@ -5,6 +5,7 @@ import {
 } from "https://deno.land/x/oak@v10.6.0/mod.ts";
 
 import { renderREST } from "https://raw.githubusercontent.com/Schotsl/Uberdeno/main/helper.ts";
+import { validateUUID } from "https://raw.githubusercontent.com/Schotsl/Uberdeno/main/validation/string.ts";
 
 import PersonEntity from "../entity/PersonEntity.ts";
 import PersonCollection from "../collection/PersonCollection.ts";
@@ -39,7 +40,7 @@ export default class PersonController implements InterfaceController {
     const params = request.url.searchParams;
     const persons = params.get(`persons`)?.split(",");
 
-    // TODO: Implement validation of persons array
+    validateUUID(persons, "persons");
 
     // TODO: Check if all persons are friends
 
