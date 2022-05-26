@@ -16,8 +16,8 @@ export async function authenticationHandler(
   request.headers.forEach((_value, key) => {
     key = key.toLowerCase();
   });
-  
-  const header = request.headers.get("authorization")
+
+  const header = request.headers.get("authorization");
   const token = header?.split(" ")[1];
 
   if (typeof token !== "string") {
