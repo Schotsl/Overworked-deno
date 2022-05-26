@@ -5,6 +5,7 @@ import {
   limitHandler,
   postHandler,
 } from "https://raw.githubusercontent.com/Schotsl/Uberdeno/main/middleware.ts";
+import { authenticationHandler } from "./middleware.ts";
 
 import scheduleRouter from "./router/scheduleRouter.ts";
 import locationRouter from "./router/locationRouter.ts";
@@ -15,10 +16,10 @@ import entryRouter from "./router/entryRouter.ts";
 const application = new Application();
 
 application.use(oakCors());
-
 application.use(errorHandler);
 application.use(limitHandler);
 application.use(postHandler);
+application.use(authenticationHandler);
 
 application.use(scheduleRouter.routes());
 application.use(locationRouter.routes());
@@ -32,4 +33,6 @@ application.use(machineRouter.allowedMethods());
 application.use(personRouter.allowedMethods());
 application.use(entryRouter.allowedMethods());
 
-application.listen({ port: 8080 });
+// TODO: Switch to Uberdeno provided application
+
+application.listen({ port: 8000 });

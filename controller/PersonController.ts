@@ -5,26 +5,25 @@ import {
 } from "https://deno.land/x/oak@v10.6.0/mod.ts";
 
 import { renderREST } from "https://raw.githubusercontent.com/Schotsl/Uberdeno/main/helper.ts";
-import { CustomError } from "https://raw.githubusercontent.com/Schotsl/Uberdeno/main/errors.ts";
 
-import EntryEntity from "../entity/EntryEntity.ts";
-import EntryCollection from "../collection/EntryCollection.ts";
-import EntryRepository from "../repository/EntryRepository.ts";
+import PersonEntity from "../entity/PersonEntity.ts";
+import PersonCollection from "../collection/PersonCollection.ts";
+import PersonRepository from "../repository/PersonRepository.ts";
 import GeneralController from "https://raw.githubusercontent.com/Schotsl/Uberdeno/main/controller/GeneralController.ts";
 import InterfaceController from "https://raw.githubusercontent.com/Schotsl/Uberdeno/main/controller/InterfaceController.ts";
 
-export default class EntryController implements InterfaceController {
+export default class PersonController implements InterfaceController {
   private generalController: GeneralController;
-  private entryRepository: EntryRepository;
+  private entryRepository: PersonRepository;
 
   constructor(
     name: string,
   ) {
-    this.entryRepository = new EntryRepository(name);
+    this.entryRepository = new PersonRepository(name);
     this.generalController = new GeneralController(
       name,
-      EntryEntity,
-      EntryCollection,
+      PersonEntity,
+      PersonCollection,
     );
   }
 
@@ -74,29 +73,30 @@ export default class EntryController implements InterfaceController {
   }
 
   async addObject(
-    { request, response }: { request: Request; response: Response },
+    { request, response, state }: {
+      request: Request;
+      response: Response;
+      state: State;
+    },
   ) {
     const body = await request.body();
     const value = await body.value;
 
-    if (
-      typeof value.time === "undefined" && typeof value.weight === "undefined"
-    ) {
-      throw new CustomError(
-        "Property 'time' or 'weight' should be provided",
-        400,
-      );
-    }
+    // Prevent the user from hijacking someone's email address
+    value.email = state.email;
+    console.log(value);
 
-    if (
-      typeof value.time !== "undefined" && typeof value.weight !== "undefined"
-    ) {
-      throw new CustomError(
-        "Property 'time' and 'weight' can't both be used in the same entry.",
-        400,
-      );
-    }
+    try {
+      const person = await this.entryRepository.getObjectByEmail(value.email);
+      const parsed = renderREST(person);
 
-    await this.generalController.addObject({ request, response, value });
+      response.body = parsed;
+    } catch {
+      return await this.generalController.addObject({
+        request,
+        response,
+        value,
+      });
+    }
   }
 }
