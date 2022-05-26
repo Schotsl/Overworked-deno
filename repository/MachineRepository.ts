@@ -34,9 +34,10 @@ export default class MachineRepository implements InterfaceRepository {
         list.join(",")
       })) schedule ON machine.uuid = schedule.machine ORDER BY created DESC LIMIT ? OFFSET ?`;
 
-    const count = `SELECT COUNT(uuid) AS total FROM machine INNER JOIN (SELECT DISTINCT schedule.machine FROM schedule WHERE schedule.person IN (${
-      list.join(",")
-    })) schedule ON machine.uuid = schedule.machine`;
+    const count =
+      `SELECT COUNT(uuid) AS total FROM machine INNER JOIN (SELECT DISTINCT schedule.machine FROM schedule WHERE schedule.person IN (${
+        list.join(",")
+      })) schedule ON machine.uuid = schedule.machine`;
 
     const promises = [
       mysqlClient.execute(fetch, [...persons, limit, offset]),
