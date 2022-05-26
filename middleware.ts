@@ -26,6 +26,7 @@ export async function authenticationHandler(
     const { payload } = await jose.jwtVerify(token, JWKS, {
       issuer: "accounts.google.com",
     });
+    console.log(payload);
 
     state.email = payload.email;
   } catch {
