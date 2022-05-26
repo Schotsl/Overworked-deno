@@ -1,5 +1,5 @@
 import * as jose from "https://deno.land/x/jose@v4.8.1/index.ts";
-import { Middleware } from "https://deno.land/x/oak@v10.5.1/mod.ts";
+import { Middleware } from "https://deno.land/x/oak@v10.6.0/mod.ts";
 import {
   MissingAuthentication,
   InvalidAuthentication,

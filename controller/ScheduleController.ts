@@ -2,7 +2,7 @@ import {
   Request,
   Response,
   State,
-} from "https://deno.land/x/oak@v10.5.1/mod.ts";
+} from "https://deno.land/x/oak@v10.6.0/mod.ts";
 
 import { renderREST } from "https://raw.githubusercontent.com/Schotsl/Uberdeno/main/helper.ts";
 import { validateUUID } from "https://raw.githubusercontent.com/Schotsl/Uberdeno/main/validation/string.ts";
