@@ -9,9 +9,10 @@ import { validateUUID } from "https://raw.githubusercontent.com/Schotsl/Uberdeno
 import { validateSmall } from "https://raw.githubusercontent.com/Schotsl/Uberdeno/main/validation/number.ts";
 
 import ScheduleEntity from "../entity/ScheduleEntity.ts";
-import GeneralController from "https://raw.githubusercontent.com/Schotsl/Uberdeno/main/controller/GeneralController.ts";
 import ScheduleCollection from "../collection/ScheduleCollection.ts";
 import ScheduleRepository from "../repository/ScheduleRepository.ts";
+
+import GeneralController from "https://raw.githubusercontent.com/Schotsl/Uberdeno/main/controller/GeneralController.ts";
 import InterfaceController from "https://raw.githubusercontent.com/Schotsl/Uberdeno/main/controller/InterfaceController.ts";
 
 export default class ScheduleController implements InterfaceController {

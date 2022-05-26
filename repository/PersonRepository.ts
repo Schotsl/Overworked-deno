@@ -2,11 +2,12 @@ import { UUIDColumn } from "https://raw.githubusercontent.com/Schotsl/Uberdeno/m
 import { MissingResource } from "https://raw.githubusercontent.com/Schotsl/Uberdeno/main/errors.ts";
 import { MissingImplementation } from "https://raw.githubusercontent.com/Schotsl/Uberdeno/main/errors.ts";
 
+import PersonEntity from "../entity/PersonEntity.ts";
+import PersonCollection from "../collection/PersonCollection.ts";
+
 import mysqlClient from "https://raw.githubusercontent.com/Schotsl/Uberdeno/main/services/mysqlClient.ts";
 import GeneralMapper from "https://raw.githubusercontent.com/Schotsl/Uberdeno/main/mapper/GeneralMapper.ts";
-import PersonEntity from "../entity/PersonEntity.ts";
 import GeneralRepository from "https://raw.githubusercontent.com/Schotsl/Uberdeno/main/repository/GeneralRepository.ts";
-import PersonCollection from "../collection/PersonCollection.ts";
 import InterfaceRepository from "https://raw.githubusercontent.com/Schotsl/Uberdeno/main/repository/InterfaceRepository.ts";
 
 export default class PersonRepository implements InterfaceRepository {

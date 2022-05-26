@@ -1,11 +1,12 @@
 import { UUIDColumn } from "https://raw.githubusercontent.com/Schotsl/Uberdeno/main/other/Columns.ts";
 import { MissingImplementation } from "https://raw.githubusercontent.com/Schotsl/Uberdeno/main/errors.ts";
 
+import MachineEntity from "../entity/MachineEntity.ts";
+import MachineCollection from "../collection/MachineCollection.ts";
+
 import mysqlClient from "https://raw.githubusercontent.com/Schotsl/Uberdeno/main/services/mysqlClient.ts";
 import GeneralMapper from "https://raw.githubusercontent.com/Schotsl/Uberdeno/main/mapper/GeneralMapper.ts";
-import MachineEntity from "../entity/MachineEntity.ts";
 import GeneralRepository from "https://raw.githubusercontent.com/Schotsl/Uberdeno/main/repository/GeneralRepository.ts";
-import MachineCollection from "../collection/MachineCollection.ts";
 import InterfaceRepository from "https://raw.githubusercontent.com/Schotsl/Uberdeno/main/repository/InterfaceRepository.ts";
 
 export default class MachineRepository implements InterfaceRepository {
