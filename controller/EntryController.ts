@@ -7,6 +7,7 @@ import {
 import { renderREST } from "https://raw.githubusercontent.com/Schotsl/Uberdeno/main/helper.ts";
 import { CustomError } from "https://raw.githubusercontent.com/Schotsl/Uberdeno/main/errors.ts";
 import { validateUUID } from "https://raw.githubusercontent.com/Schotsl/Uberdeno/main/validation/string.ts";
+import { InvalidProperty } from "https://raw.githubusercontent.com/Schotsl/Uberdeno/main/errors.ts";
 
 import EntryEntity from "../entity/EntryEntity.ts";
 import GeneralController from "https://raw.githubusercontent.com/Schotsl/Uberdeno/main/controller/GeneralController.ts";
@@ -38,20 +39,17 @@ export default class EntryController implements InterfaceController {
   ) {
     const { offset, limit } = state;
 
-    const person = request.url.searchParams.get(`person`)!;
-    const machine = request.url.searchParams.get(`machine`)!;
-    const location = request.url.searchParams.get(`location`)!;
+    const params = request.url.searchParams;
+    const persons = params.get(`persons`)?.split(',');
 
-    validateUUID(person, `person`);
-    validateUUID(machine, `machine`);
-    validateUUID(location, `location`, false);
+    // TODO: Implement validation of persons array
+
+    // TODO: Check if all persons are friends
 
     const result = await this.entryRepository.getCollection(
       offset,
       limit,
-      person,
-      machine,
-      location,
+      persons!,
     );
 
     const parsed = renderREST(result);

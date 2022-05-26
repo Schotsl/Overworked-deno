@@ -1,5 +1,6 @@
 import { UUIDColumn } from "https://raw.githubusercontent.com/Schotsl/Uberdeno/main/other/Columns.ts";
 import { MissingImplementation } from "https://raw.githubusercontent.com/Schotsl/Uberdeno/main/errors.ts";
+
 import mysqlClient from "https://raw.githubusercontent.com/Schotsl/Uberdeno/main/services/mysqlClient.ts";
 import GeneralMapper from "https://raw.githubusercontent.com/Schotsl/Uberdeno/main/mapper/GeneralMapper.ts";
 import EntryEntity from "../entity/EntryEntity.ts";
@@ -25,25 +26,15 @@ export default class EntryRepository implements InterfaceRepository {
   public async getCollection(
     offset: number,
     limit: number,
-    person: string,
-    machine: string,
-    location?: string,
+    persons: string[],
   ): Promise<EntryCollection> {
-    const fetch = location === null
-      ? "SELECT HEX(uuid) AS uuid, HEX(person) AS person, HEX(machine) AS machine, HEX(location) AS location, speed, weight, upgrade, created, updated FROM entry WHERE person = UNHEX(REPLACE(?, '-', '')) AND machine = UNHEX(REPLACE(?, '-', '')) ORDER BY created DESC LIMIT ? OFFSET ?"
-      : "SELECT HEX(uuid) AS uuid, HEX(person) AS person, HEX(machine) AS machine, HEX(location) AS location, speed, weight, upgrade, created, updated FROM entry WHERE person = UNHEX(REPLACE(?, '-', '')) AND machine = UNHEX(REPLACE(?, '-', '')) AND location = UNHEX(REPLACE(?, '-', '')) ORDER BY created DESC LIMIT ? OFFSET ?";
-
-    const count = location === null
-      ? "SELECT COUNT(uuid) AS total FROM entry WHERE person = UNHEX(REPLACE(?, '-', '')) AND machine = UNHEX(REPLACE(?, '-', ''))"
-      : "SELECT COUNT(uuid) AS total FROM entry WHERE person = UNHEX(REPLACE(?, '-', '')) AND machine = UNHEX(REPLACE(?, '-', '')) AND location = UNHEX(REPLACE(?, '-', ''))";
-
-    const params = location === null
-      ? [person, machine]
-      : [person, machine, location];
+    const list = persons.map(() => "UNHEX(REPLACE(?, '-', ''))");
+    const fetch = `SELECT HEX(uuid) AS uuid, HEX(person) AS person, HEX(machine) AS machine, HEX(location) AS location, speed, weight, upgrade, created, updated FROM entry WHERE person IN (${list.join(',')}) ORDER BY created DESC LIMIT ? OFFSET ?`;
+    const count = `SELECT COUNT(uuid) AS total FROM entry WHERE person IN (${list.join(',')})`
 
     const promises = [
-      mysqlClient.execute(fetch, [...params, limit, offset]),
-      mysqlClient.execute(count, [...params]),
+      mysqlClient.execute(fetch, [...persons, limit, offset]),
+      mysqlClient.execute(count, [...persons]),
     ];
 
     const data = await Promise.all(promises);
