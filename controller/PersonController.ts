@@ -84,7 +84,6 @@ export default class PersonController implements InterfaceController {
 
     // Prevent the user from hijacking someone's email address
     value.email = state.email;
-    console.log(value);
 
     try {
       const person = await this.entryRepository.getObjectByEmail(value.email);

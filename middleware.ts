@@ -28,7 +28,6 @@ export async function authenticationHandler(
     });
 
     state.email = payload.email;
-    console.log(state.email);
   } catch (error) {
     console.error(error);
     throw new InvalidAuthentication();
