@@ -1,6 +1,6 @@
 import Server from "https://raw.githubusercontent.com/Schotsl/Uberdeno/main/other/Server.ts";
 
-import { authenticationHandler } from "./middleware.ts";
+import { authorizationHandler } from "./middleware.ts";
 
 import scheduleRouter from "./router/scheduleRouter.ts";
 import locationRouter from "./router/locationRouter.ts";
@@ -11,7 +11,7 @@ import entryRouter from "./router/entryRouter.ts";
 
 const server = new Server();
 
-server.use(authenticationHandler);
+server.use(authorizationHandler);
 
 server.add(scheduleRouter);
 server.add(locationRouter);

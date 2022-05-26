@@ -1,11 +1,11 @@
 import * as jose from "https://deno.land/x/jose@v4.8.1/index.ts";
 import { Request, State } from "https://deno.land/x/oak@v10.6.0/mod.ts";
 import {
-  InvalidAuthentication,
-  MissingAuthentication,
+  InvalidAuthorization,
+  MissingAuthorization,
 } from "https://raw.githubusercontent.com/Schotsl/Uberdeno/main/errors.ts";
 
-export async function authenticationHandler(
+export async function authorizationHandler(
   { request, state }: {
     request: Request;
     state: State;
@@ -21,7 +21,7 @@ export async function authenticationHandler(
   const token = header?.split(" ")[1];
 
   if (typeof token !== "string") {
-    throw new MissingAuthentication();
+    throw new MissingAuthorization();
   }
 
   try {
@@ -36,7 +36,7 @@ export async function authenticationHandler(
 
     state.email = payload.email;
   } catch {
-    throw new InvalidAuthentication();
+    throw new InvalidAuthorization();
   }
 
   await next();
