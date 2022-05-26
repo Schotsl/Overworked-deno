@@ -6,8 +6,6 @@ import {
 
 import { renderREST } from "https://raw.githubusercontent.com/Schotsl/Uberdeno/main/helper.ts";
 import { CustomError } from "https://raw.githubusercontent.com/Schotsl/Uberdeno/main/errors.ts";
-import { validateUUID } from "https://raw.githubusercontent.com/Schotsl/Uberdeno/main/validation/string.ts";
-import { InvalidProperty } from "https://raw.githubusercontent.com/Schotsl/Uberdeno/main/errors.ts";
 
 import EntryEntity from "../entity/EntryEntity.ts";
 import GeneralController from "https://raw.githubusercontent.com/Schotsl/Uberdeno/main/controller/GeneralController.ts";
