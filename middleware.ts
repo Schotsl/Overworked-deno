@@ -31,6 +31,7 @@ export async function authenticationHandler(
 
     const { payload } = await jose.jwtVerify(token, JWKS, {
       issuer: "accounts.google.com",
+      maxTokenAge: 999999999,
     });
 
     state.email = payload.email;
