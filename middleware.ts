@@ -12,7 +12,7 @@ export async function authenticationHandler(
   },
   next: () => Promise<unknown>,
 ): Promise<void> {
-  const token = request.headers.get("Authorization")?.split(" ")[1];
+  const token = request.headers.get("authorization")?.split(" ")[1];
 
   if (typeof token !== "string") {
     throw new MissingAuthentication();
