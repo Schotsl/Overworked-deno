@@ -12,7 +12,13 @@ export async function authenticationHandler(
   },
   next: () => Promise<unknown>,
 ): Promise<void> {
-  const token = request.headers.get("authorization")?.split(" ")[1];
+  // We'll transfer every header key to lowercase for easier comparison
+  request.headers.forEach((_value, key) => {
+    key = key.toLowerCase();
+  });
+  
+  const header = request.headers.get("authorization")
+  const token = header?.split(" ")[1];
 
   if (typeof token !== "string") {
     throw new MissingAuthentication();
