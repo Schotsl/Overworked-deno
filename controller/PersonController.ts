@@ -73,8 +73,10 @@ export default class PersonController implements InterfaceController {
       username!,
     );
     const parsed = renderREST(result);
-
-    response.body = parsed;
+    
+    setTimeout(() => {
+      response.body = parsed;
+    }, 250);
   }
 
   getObject(
