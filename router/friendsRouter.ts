@@ -4,15 +4,15 @@ import GeneralController from "https://raw.githubusercontent.com/Schotsl/Uberden
 import FriendsEntity from "../entity/FriendsEntity.ts";
 import FriendsCollection from "../collection/FriendsCollection.ts";
 
-const projectController = new GeneralController(
+const friendController = new GeneralController(
   "friends",
   FriendsEntity,
   FriendsCollection,
 );
 
-const projectRouter = new GeneralRouter(
-  projectController,
+const friendRouter = new GeneralRouter(
+  friendController,
   "friends",
 );
 
-export default projectRouter.router;
+export default friendRouter.router;

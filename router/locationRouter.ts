@@ -4,15 +4,15 @@ import GeneralController from "https://raw.githubusercontent.com/Schotsl/Uberden
 import LocationEntity from "../entity/LocationEntity.ts";
 import LocationCollection from "../collection/LocationCollection.ts";
 
-const projectController = new GeneralController(
+const locationController = new GeneralController(
   "location",
   LocationEntity,
   LocationCollection,
 );
 
-const projectRouter = new GeneralRouter(
-  projectController,
+const locationRouter = new GeneralRouter(
+  locationController,
   "location",
 );
 
-export default projectRouter.router;
+export default locationRouter.router;
