@@ -39,8 +39,9 @@ export default class ScheduleController implements InterfaceController {
   ) {
     const { offset, limit } = state;
 
-    const day = parseInt(request.url.searchParams.get(`day`)!);
-    const person = request.url.searchParams.get(`person`)!;
+    const params = request.url.searchParams;
+    const person = params.get(`person`)?.trim()!;
+    const day = parseInt(params.get(`day`)!);
 
     validateUUID(person, `person`);
     validateSmall(day, `day`);

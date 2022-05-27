@@ -39,7 +39,7 @@ export default class MachineController implements InterfaceController {
     const { offset, limit } = state;
 
     const params = request.url.searchParams;
-    const persons = params.get(`persons`)?.split(",");
+    const persons = params.get(`persons`)?.trim().split(",")!;
 
     validateUUID(persons, "persons");
 
@@ -48,7 +48,7 @@ export default class MachineController implements InterfaceController {
     const result = await this.machineRepository.getCollection(
       offset,
       limit,
-      persons!,
+      persons,
     );
 
     const parsed = renderREST(result);

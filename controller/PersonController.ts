@@ -41,14 +41,14 @@ export default class PersonController implements InterfaceController {
     const { offset, limit } = state;
 
     const params = request.url.searchParams;
-    const persons = params.get(`persons`)?.split(",");
+    const persons = params.get(`persons`)?.trim().split(",")!;
 
     validateUUID(persons, "persons");
 
     const result = await this.entryRepository.getCollection(
       offset,
       limit,
-      persons!,
+      persons,
     );
     const parsed = renderREST(result);
 
