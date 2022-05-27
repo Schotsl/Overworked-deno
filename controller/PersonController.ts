@@ -106,8 +106,6 @@ export default class PersonController implements InterfaceController {
     response.body = parsed;
   }
 
-  // TODO: Refactor al endpoints to use UUID instead of email
-
   getObject(
     { response, params }: {
       response: Response;
