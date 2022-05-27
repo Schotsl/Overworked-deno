@@ -5,7 +5,7 @@ import { authorizationHandler } from "./middleware.ts";
 import scheduleRouter from "./router/scheduleRouter.ts";
 import locationRouter from "./router/locationRouter.ts";
 import machineRouter from "./router/machineRouter.ts";
-import friendsRouter from "./router/entryRouter.ts";
+import friendsRouter from "./router/friendsRouter.ts";
 import personRouter from "./router/personRouter.ts";
 import entryRouter from "./router/entryRouter.ts";
 
