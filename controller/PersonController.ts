@@ -63,7 +63,7 @@ export default class PersonController implements InterfaceController {
       state: State;
     },
   ) {
-    const { offset, limit, email } = state;
+    const { offset, limit, uuid } = state;
 
     const params = request.url.searchParams;
 
@@ -79,7 +79,7 @@ export default class PersonController implements InterfaceController {
     const result = await this.entryRepository.getCollectionByUsername(
       offset,
       limit,
-      email,
+      uuid,
       username!,
     );
     const parsed = renderREST(result);

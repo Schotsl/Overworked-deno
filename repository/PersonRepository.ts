@@ -62,27 +62,24 @@ export default class PersonRepository implements InterfaceRepository {
   public async getCollectionByUsername(
     offset: number,
     limit: number,
-    email: string,
+    uuid: string,
     username: string,
   ): Promise<PersonCollection> {
-    // Remove % from the query to prevent looking up everything
-    username = username.replace("%", "");
-
     const fetch =
-      `SELECT HEX(uuid) AS uuid, name, photo, email, created, updated, created, updated FROM person WHERE email LIKE CONCAT(?, '%') AND NOT email = ? AND uuid NOT IN (SELECT origin FROM friends INNER JOIN person ON friends.target = person.uuid WHERE person.email = ? UNION SELECT target FROM friends INNER JOIN person ON friends.origin = person.uuid WHERE person.email = ?) ORDER BY created DESC LIMIT ? OFFSET ?`;
+      `SELECT HEX(uuid) AS uuid, name, photo, email, created, updated, created, updated FROM person WHERE email LIKE CONCAT(?, '%') AND NOT uuid = UNHEX(REPLACE(?, '-', '')) AND uuid NOT IN ( SELECT origin FROM friends WHERE friends.target = UNHEX(REPLACE(?, '-', '')) UNION SELECT target FROM friends WHERE friends.origin = UNHEX(REPLACE(?, '-', ''))) ORDER BY created DESC LIMIT ? OFFSET ?`;
     const count =
-      `SELECT COUNT(uuid) AS total FROM person WHERE email LIKE CONCAT(?, '%') AND NOT email = ? AND uuid NOT IN (SELECT origin FROM friends INNER JOIN person ON friends.target = person.uuid WHERE person.email = ? UNION SELECT target FROM friends INNER JOIN person ON friends.origin = person.uuid WHERE person.email = ?)`;
+      `SELECT COUNT(uuid) AS total FROM person WHERE email LIKE CONCAT(?, '%') AND NOT uuid = UNHEX(REPLACE(?, '-', '')) AND uuid NOT IN ( SELECT origin FROM friends WHERE friends.target = UNHEX(REPLACE(?, '-', '')) UNION SELECT target FROM friends WHERE friends.origin = UNHEX(REPLACE(?, '-', '')))`;
 
     const promises = [
       mysqlClient.execute(fetch, [
         username,
-        email,
-        email,
-        email,
+        uuid,
+        uuid,
+        uuid,
         limit,
         offset,
       ]),
-      mysqlClient.execute(count, [username, email, email, email]),
+      mysqlClient.execute(count, [username, uuid, uuid, uuid]),
     ];
 
     const data = await Promise.all(promises);
@@ -102,7 +99,6 @@ export default class PersonRepository implements InterfaceRepository {
     limit: number,
     uuid: string,
   ): Promise<PersonCollection> {
-    // TODO: Refactor this too use state UUID
     const fetch =
       `SELECT HEX(person.uuid) AS uuid, HEX(friends.uuid) AS friend, person.name, person.photo, person.email, person.created, person.updated, person.created, person.updated FROM person INNER JOIN friends ON person.uuid = friends.target OR person.uuid = friends.origin WHERE (friends.target = UNHEX(REPLACE(?, '-', '')) OR friends.origin = UNHEX(REPLACE(?, '-', ''))) AND NOT person.uuid = UNHEX(REPLACE(?, '-', '')) ORDER BY created DESC LIMIT ? OFFSET ?`;
     const count =
