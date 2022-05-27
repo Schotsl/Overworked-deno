@@ -11,5 +11,4 @@ const personRouter = new GeneralRouter(
 personRouter.get("/search", personController.getCollectionByUsername);
 personRouter.get("/friends", personController.getCollectionByFriends);
 
-
 export default personRouter.router;

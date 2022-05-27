@@ -96,7 +96,7 @@ export default class PersonRepository implements InterfaceRepository {
       `SELECT HEX(uuid) AS uuid, name, photo, email, created, updated, created, updated FROM person WHERE uuid IN (SELECT origin FROM friends INNER JOIN person ON friends.target = person.uuid WHERE person.email = ? UNION SELECT target FROM friends INNER JOIN person ON friends.origin = person.uuid WHERE person.email = ?) ORDER BY created DESC LIMIT ? OFFSET ?`;
     const count =
       `SELECT COUNT(uuid) AS total FROM person WHERE uuid IN (SELECT origin FROM friends INNER JOIN person ON friends.target = person.uuid WHERE person.email = ? UNION SELECT target FROM friends INNER JOIN person ON friends.origin = person.uuid WHERE person.email = ?)`;
-    console.log(email);
+
     const promises = [
       mysqlClient.execute(fetch, [email, email, limit, offset]),
       mysqlClient.execute(count, [email, email]),
