@@ -8,7 +8,7 @@ import BaseEntity from "https://raw.githubusercontent.com/Schotsl/Uberdeno/main/
 export default class FriendsEntity extends BaseEntity {
   public origin = new UUIDColumn("origin");
   public target = new UUIDColumn("target");
-  public approved = new BooleanColumn("approved");
+  public approved = new BooleanColumn("approved", false, true);
 
   constructor() {
     super();

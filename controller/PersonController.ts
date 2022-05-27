@@ -65,12 +65,12 @@ export default class PersonController implements InterfaceController {
     const { offset, limit } = state;
 
     const params = request.url.searchParams;
-    const username = params.get(`username`);
+    const username = params.get(`username`)?.trim()!;
 
     const result = await this.entryRepository.getCollectionByUsername(
       offset,
       limit,
-      username!,
+      username,
     );
     const parsed = renderREST(result);
 
