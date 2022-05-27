@@ -67,20 +67,20 @@ export default class PersonController implements InterfaceController {
 
     const params = request.url.searchParams;
 
-    let username = params.get(`username`);
+    let query = params.get(`query`);
 
-    if (username) {
-      username = username.replaceAll("%", "");
-      username = username.trim();
+    if (query) {
+      query = query.replaceAll("%", "");
+      query = query.trim();
     }
 
-    validateString(username, "username");
+    validateString(query, "query");
 
     const result = await this.entryRepository.getCollectionByUsername(
       offset,
       limit,
       uuid,
-      username!,
+      query!,
     );
     const parsed = renderREST(result);
 

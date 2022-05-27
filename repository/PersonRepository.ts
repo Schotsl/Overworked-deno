@@ -63,7 +63,7 @@ export default class PersonRepository implements InterfaceRepository {
     offset: number,
     limit: number,
     uuid: string,
-    username: string,
+    query: string,
   ): Promise<PersonCollection> {
     const fetch =
       `SELECT HEX(uuid) AS uuid, name, photo, email, created, updated, created, updated FROM person WHERE email LIKE CONCAT(?, '%') AND NOT uuid = UNHEX(REPLACE(?, '-', '')) AND uuid NOT IN ( SELECT origin FROM friends WHERE friends.target = UNHEX(REPLACE(?, '-', '')) UNION SELECT target FROM friends WHERE friends.origin = UNHEX(REPLACE(?, '-', ''))) ORDER BY created DESC LIMIT ? OFFSET ?`;
@@ -72,14 +72,14 @@ export default class PersonRepository implements InterfaceRepository {
 
     const promises = [
       mysqlClient.execute(fetch, [
-        username,
+        query,
         uuid,
         uuid,
         uuid,
         limit,
         offset,
       ]),
-      mysqlClient.execute(count, [username, uuid, uuid, uuid]),
+      mysqlClient.execute(count, [query, uuid, uuid, uuid]),
     ];
 
     const data = await Promise.all(promises);
