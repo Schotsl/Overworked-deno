@@ -59,6 +59,31 @@ export default class PersonRepository implements InterfaceRepository {
     ) as PersonCollection;
   }
 
+  public async getCollectionByUsername(
+    offset: number,
+    limit: number,
+    username: string,
+  ): Promise<PersonCollection> {
+    const fetch = `SELECT HEX(uuid) AS uuid, name, photo, email, created, updated, created, updated FROM person WHERE email LIKE CONCAT(?, '%') ORDER BY created DESC LIMIT ? OFFSET ?`;
+    const count = `SELECT COUNT(uuid) AS total FROM person WHERE email LIKE CONCAT(?, '%')`;
+
+    const promises = [
+      mysqlClient.execute(fetch, [username, limit, offset]),
+      mysqlClient.execute(count, [username]),
+    ];
+
+    const data = await Promise.all(promises);
+    const rows = data[0].rows!;
+    const total = data[1].rows![0].total;
+
+    return this.generalMapper.mapCollection(
+      rows,
+      offset,
+      limit,
+      total,
+    ) as PersonCollection;
+  }
+
   public async removeObject(uuid: string): Promise<void> {
     return await this.generalRepository.removeObject(uuid);
   }
