@@ -64,8 +64,10 @@ export default class PersonRepository implements InterfaceRepository {
     limit: number,
     username: string,
   ): Promise<PersonCollection> {
-    const fetch = `SELECT HEX(uuid) AS uuid, name, photo, email, created, updated, created, updated FROM person WHERE email LIKE CONCAT(?, '%') ORDER BY created DESC LIMIT ? OFFSET ?`;
-    const count = `SELECT COUNT(uuid) AS total FROM person WHERE email LIKE CONCAT(?, '%')`;
+    const fetch =
+      `SELECT HEX(uuid) AS uuid, name, photo, email, created, updated, created, updated FROM person WHERE email LIKE CONCAT(?, '%') ORDER BY created DESC LIMIT ? OFFSET ?`;
+    const count =
+      `SELECT COUNT(uuid) AS total FROM person WHERE email LIKE CONCAT(?, '%')`;
 
     const promises = [
       mysqlClient.execute(fetch, [username, limit, offset]),

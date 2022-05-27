@@ -5,7 +5,9 @@ import {
 } from "https://deno.land/x/oak@v10.6.0/mod.ts";
 
 import { renderREST } from "https://raw.githubusercontent.com/Schotsl/Uberdeno/main/helper.ts";
-import { validateUUID, validateVarchar } from "https://raw.githubusercontent.com/Schotsl/Uberdeno/main/validation/string.ts";
+import {
+  validateUUID,
+} from "https://raw.githubusercontent.com/Schotsl/Uberdeno/main/validation/string.ts";
 
 import PersonEntity from "../entity/PersonEntity.ts";
 import PersonCollection from "../collection/PersonCollection.ts";
@@ -43,7 +45,11 @@ export default class PersonController implements InterfaceController {
 
     validateUUID(persons, "persons");
 
-    const result = await this.entryRepository.getCollection(offset, limit, persons!);
+    const result = await this.entryRepository.getCollection(
+      offset,
+      limit,
+      persons!,
+    );
     const parsed = renderREST(result);
 
     response.body = parsed;
@@ -61,7 +67,11 @@ export default class PersonController implements InterfaceController {
     const params = request.url.searchParams;
     const username = params.get(`username`);
 
-    const result = await this.entryRepository.getCollectionByUsername(offset, limit, username!);
+    const result = await this.entryRepository.getCollectionByUsername(
+      offset,
+      limit,
+      username!,
+    );
     const parsed = renderREST(result);
 
     response.body = parsed;
