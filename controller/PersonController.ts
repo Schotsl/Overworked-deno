@@ -77,6 +77,24 @@ export default class PersonController implements InterfaceController {
     response.body = parsed;
   }
 
+  async getCollectionByFriends(
+    { response, state }: {
+      response: Response;
+      state: State;
+    },
+  ) {
+    const { offset, limit, email } = state;
+
+    const result = await this.entryRepository.getCollectionByFriends(
+      offset,
+      limit,
+      email,
+    );
+    const parsed = renderREST(result);
+
+    response.body = parsed;
+  }
+
   getObject(
     { response, params }: {
       response: Response;
