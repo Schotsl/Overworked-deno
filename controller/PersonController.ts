@@ -16,6 +16,10 @@ import PersonRepository from "../repository/PersonRepository.ts";
 import GeneralController from "https://raw.githubusercontent.com/Schotsl/Uberdeno/main/controller/GeneralController.ts";
 import InterfaceController from "https://raw.githubusercontent.com/Schotsl/Uberdeno/main/controller/InterfaceController.ts";
 
+function delay(ms: number) {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+}
+
 export default class PersonController implements InterfaceController {
   private generalController: GeneralController;
   private entryRepository: PersonRepository;
@@ -73,10 +77,10 @@ export default class PersonController implements InterfaceController {
       username!,
     );
     const parsed = renderREST(result);
-    
-    setTimeout(() => {
-      response.body = parsed;
-    }, 250);
+
+    await delay(250);
+
+    response.body = parsed;
   }
 
   getObject(
