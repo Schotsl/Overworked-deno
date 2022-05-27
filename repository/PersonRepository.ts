@@ -62,16 +62,17 @@ export default class PersonRepository implements InterfaceRepository {
   public async getCollectionByUsername(
     offset: number,
     limit: number,
+    email: string,
     username: string,
   ): Promise<PersonCollection> {
     const fetch =
-      `SELECT HEX(uuid) AS uuid, name, photo, email, created, updated, created, updated FROM person WHERE email LIKE CONCAT(?, '%') ORDER BY created DESC LIMIT ? OFFSET ?`;
+      `SELECT HEX(uuid) AS uuid, name, photo, email, created, updated, created, updated FROM person WHERE email LIKE CONCAT(?, '%') AND NOT email = ? ORDER BY created DESC LIMIT ? OFFSET ?`;
     const count =
-      `SELECT COUNT(uuid) AS total FROM person WHERE email LIKE CONCAT(?, '%')`;
+      `SELECT COUNT(uuid) AS total FROM person WHERE email LIKE CONCAT(?, '%') AND NOT email = ?`;
 
     const promises = [
-      mysqlClient.execute(fetch, [username, limit, offset]),
-      mysqlClient.execute(count, [username]),
+      mysqlClient.execute(fetch, [username, email, limit, offset]),
+      mysqlClient.execute(count, [username, email]),
     ];
 
     const data = await Promise.all(promises);
