@@ -100,17 +100,17 @@ export default class PersonRepository implements InterfaceRepository {
   public async getCollectionByFriends(
     offset: number,
     limit: number,
-    email: string,
+    uuid: string,
   ): Promise<PersonCollection> {
     // TODO: Refactor this too use state UUID
     const fetch =
-      `SELECT HEX(uuid) AS uuid, name, photo, email, created, updated, created, updated FROM person WHERE uuid IN (SELECT origin FROM friends INNER JOIN person ON friends.target = person.uuid WHERE person.email = ? UNION SELECT target FROM friends INNER JOIN person ON friends.origin = person.uuid WHERE person.email = ?) ORDER BY created DESC LIMIT ? OFFSET ?`;
+      `SELECT HEX(person.uuid) AS uuid, HEX(friends.uuid) AS friend, person.name, person.photo, person.email, person.created, person.updated, person.created, person.updated FROM person INNER JOIN friends ON person.uuid = friends.target OR person.uuid = friends.origin WHERE (friends.target = UNHEX(REPLACE(?, '-', '')) OR friends.origin = UNHEX(REPLACE(?, '-', ''))) AND NOT person.uuid = UNHEX(REPLACE(?, '-', '')) ORDER BY created DESC LIMIT ? OFFSET ?`;
     const count =
-      `SELECT COUNT(uuid) AS total FROM person WHERE uuid IN (SELECT origin FROM friends INNER JOIN person ON friends.target = person.uuid WHERE person.email = ? UNION SELECT target FROM friends INNER JOIN person ON friends.origin = person.uuid WHERE person.email = ?)`;
+      `SELECT COUNT(person.uuid) AS total FROM person INNER JOIN friends ON person.uuid = friends.target OR person.uuid = friends.origin WHERE (friends.target = UNHEX(REPLACE(?, '-', '')) OR friends.origin = UNHEX(REPLACE(?, '-', ''))) AND NOT person.uuid = UNHEX(REPLACE(?, '-', ''))`;
 
     const promises = [
-      mysqlClient.execute(fetch, [email, email, limit, offset]),
-      mysqlClient.execute(count, [email, email]),
+      mysqlClient.execute(fetch, [uuid, uuid, uuid, limit, offset]),
+      mysqlClient.execute(count, [uuid, uuid, uuid]),
     ];
 
     const data = await Promise.all(promises);

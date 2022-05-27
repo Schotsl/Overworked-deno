@@ -1,9 +1,12 @@
 import * as jose from "https://deno.land/x/jose@v4.8.1/index.ts";
+
 import { Request, State } from "https://deno.land/x/oak@v10.6.0/mod.ts";
 import {
   InvalidAuthorization,
   MissingAuthorization,
 } from "https://raw.githubusercontent.com/Schotsl/Uberdeno/main/errors.ts";
+
+import PersonRepository from "./repository/PersonRepository.ts";
 
 export async function authorizationHandler(
   { request, state }: {
@@ -38,6 +41,17 @@ export async function authorizationHandler(
     });
 
     state.email = payload.email;
+
+    try {
+      const personEmail = payload.email as string;
+      const personRepository = new PersonRepository("person");
+      const personEntity = await personRepository.getObjectByEmail(personEmail);
+      const personUuid = personEntity.uuid.getValue();
+
+      state.uuid = personUuid;
+    } catch {
+      // The user we'll register later on so no need to throw an error
+    }
   } catch {
     throw new InvalidAuthorization();
   }

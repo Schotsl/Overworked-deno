@@ -93,17 +93,20 @@ export default class PersonController implements InterfaceController {
       state: State;
     },
   ) {
-    const { offset, limit, email } = state;
+    const { offset, limit, uuid } = state;
 
     const result = await this.entryRepository.getCollectionByFriends(
       offset,
       limit,
-      email,
+      uuid,
     );
+
     const parsed = renderREST(result);
 
     response.body = parsed;
   }
+
+  // TODO: Refactor al endpoints to use UUID instead of email
 
   getObject(
     { response, params }: {
