@@ -19,11 +19,10 @@ CREATE TABLE friends (
 	created TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
 	updated TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
 	
-  -- TODO: Make combination unique
-
 	PRIMARY KEY (uuid),
 	FOREIGN KEY (origin) REFERENCES person(uuid),
 	FOREIGN KEY (target) REFERENCES person(uuid)
+	UNIQUE KEY (origin, target)
 );
 
 CREATE TABLE machine (
