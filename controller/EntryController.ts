@@ -40,7 +40,7 @@ export default class EntryController implements InterfaceController {
 
     // TODO: Create wrapper that trims
     const params = request.url.searchParams;
-    const persons = params.get(`persons`)?.trim().split(",")!;
+    const persons = params.get(`persons`)?.trim().split(",");
 
     validateUUID(persons, "persons");
 
@@ -49,7 +49,7 @@ export default class EntryController implements InterfaceController {
     const result = await this.entryRepository.getCollection(
       offset,
       limit,
-      persons,
+      persons!,
     );
 
     const parsed = renderREST(result);

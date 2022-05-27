@@ -65,6 +65,9 @@ export default class PersonRepository implements InterfaceRepository {
     email: string,
     username: string,
   ): Promise<PersonCollection> {
+    // Remove % from the query to prevent looking up everything
+    username = username.replace('%', '');
+    
     const fetch =
       `SELECT HEX(uuid) AS uuid, name, photo, email, created, updated, created, updated FROM person WHERE email LIKE CONCAT(?, '%') AND NOT email = ? AND uuid NOT IN (SELECT origin FROM friends INNER JOIN person ON friends.target = person.uuid WHERE person.email = ? UNION SELECT target FROM friends INNER JOIN person ON friends.origin = person.uuid WHERE person.email = ?) ORDER BY created DESC LIMIT ? OFFSET ?`;
     const count =

@@ -40,7 +40,7 @@ export default class ScheduleController implements InterfaceController {
     const { offset, limit } = state;
 
     const params = request.url.searchParams;
-    const person = params.get(`person`)?.trim()!;
+    const person = params.get(`person`)?.trim();
     const day = parseInt(params.get(`day`)!);
 
     validateUUID(person, `person`);
@@ -49,7 +49,7 @@ export default class ScheduleController implements InterfaceController {
     const result = await this.scheduleRepository.getCollection(
       offset,
       limit,
-      person,
+      person!,
       day,
     );
     const parsed = renderREST(result);
