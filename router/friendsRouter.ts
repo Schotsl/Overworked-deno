@@ -5,14 +5,14 @@ import FriendsEntity from "../entity/FriendsEntity.ts";
 import FriendsCollection from "../collection/FriendsCollection.ts";
 
 const friendController = new GeneralController(
-  "friends",
+  "friend",
   FriendsEntity,
   FriendsCollection,
 );
 
 const friendRouter = new GeneralRouter(
   friendController,
-  "friends",
+  "friend",
 );
 
 export default friendRouter.router;

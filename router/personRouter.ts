@@ -9,6 +9,6 @@ const personRouter = new GeneralRouter(
 
 // Add non-standard search endpoint
 personRouter.get("/search", personController.getCollectionByUsername);
-personRouter.get("/friends", personController.getCollectionByFriends);
+personRouter.get("/friend", personController.getCollectionByFriends);
 
 export default personRouter.router;

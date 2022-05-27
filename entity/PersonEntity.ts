@@ -8,12 +8,10 @@ import BaseEntity from "https://raw.githubusercontent.com/Schotsl/Uberdeno/main/
 
 // TODO: Make property 'friend' readonly
 
-// TODO: Rename friends to friend
-
 export default class PersonEntity extends BaseEntity {
   public name = new VarcharColumn("name");
   public email = new VarcharColumn("email");
-  
+
   public photo = new UrlColumn("photo");
   public friend = new UUIDColumn("friend", false);
 

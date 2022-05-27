@@ -43,8 +43,6 @@ export default class MachineController implements InterfaceController {
 
     validateUUID(persons, "persons");
 
-    // TODO: Check if all persons are friends
-
     const result = await this.machineRepository.getCollection(
       offset,
       limit,

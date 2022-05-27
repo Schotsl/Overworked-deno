@@ -10,7 +10,7 @@ CREATE TABLE location (
 	PRIMARY KEY (uuid)
 );
 
-CREATE TABLE friends (
+CREATE TABLE friend (
 	uuid BINARY(16) NOT NULL,
 	origin BINARY(16) NOT NULL,
 	target BINARY(16) NOT NULL,
