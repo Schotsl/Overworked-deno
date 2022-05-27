@@ -6,8 +6,8 @@ import {
 
 import { renderREST } from "https://raw.githubusercontent.com/Schotsl/Uberdeno/main/helper.ts";
 import {
-  validateUUID,
   validateString,
+  validateUUID,
 } from "https://raw.githubusercontent.com/Schotsl/Uberdeno/main/validation/string.ts";
 
 import PersonEntity from "../entity/PersonEntity.ts";
@@ -68,12 +68,12 @@ export default class PersonController implements InterfaceController {
     const params = request.url.searchParams;
 
     let username = params.get(`username`);
-    
+
     if (username) {
-      username = username.replaceAll('%', '');
+      username = username.replaceAll("%", "");
       username = username.trim();
     }
-    
+
     validateString(username, "username");
 
     const result = await this.entryRepository.getCollectionByUsername(
