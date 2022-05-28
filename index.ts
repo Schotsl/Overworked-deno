@@ -3,6 +3,7 @@ import Server from "https://raw.githubusercontent.com/Schotsl/Uberdeno/main/othe
 import { authorizationHandler } from "./middleware.ts";
 
 import scheduleRouter from "./router/scheduleRouter.ts";
+import overviewRouter from "./router/overviewRouter.ts";
 import locationRouter from "./router/locationRouter.ts";
 import machineRouter from "./router/machineRouter.ts";
 import friendRouter from "./router/friendRouter.ts";
@@ -14,6 +15,7 @@ const server = new Server();
 server.use(authorizationHandler);
 
 server.add(scheduleRouter);
+server.add(overviewRouter);
 server.add(locationRouter);
 server.add(machineRouter);
 server.add(friendRouter);
