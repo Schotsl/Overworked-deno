@@ -36,7 +36,7 @@ export default class PersonRepository implements InterfaceRepository {
     const fetch =
       `SELECT HEX(uuid) AS uuid, name, photo, email, created, updated, created, updated FROM person WHERE uuid IN (${
         list.join(",")
-      }) ORDER BY created DESC LIMIT ? OFFSET ?`;
+      }) ORDER BY name ASC LIMIT ? OFFSET ?`;
 
     const count = `SELECT COUNT(uuid) AS total FROM person WHERE uuid IN (${
       list.join(",")
@@ -66,7 +66,7 @@ export default class PersonRepository implements InterfaceRepository {
     query: string,
   ): Promise<PersonCollection> {
     const fetch =
-      `SELECT HEX(uuid) AS uuid, name, photo, email, created, updated, created, updated FROM person WHERE email LIKE CONCAT(?, '%') AND NOT uuid = UNHEX(REPLACE(?, '-', '')) AND uuid NOT IN ( SELECT origin FROM friend WHERE friend.target = UNHEX(REPLACE(?, '-', '')) UNION SELECT target FROM friend WHERE friend.origin = UNHEX(REPLACE(?, '-', ''))) ORDER BY created DESC LIMIT ? OFFSET ?`;
+      `SELECT HEX(uuid) AS uuid, name, photo, email, created, updated, created, updated FROM person WHERE email LIKE CONCAT(?, '%') AND NOT uuid = UNHEX(REPLACE(?, '-', '')) AND uuid NOT IN ( SELECT origin FROM friend WHERE friend.target = UNHEX(REPLACE(?, '-', '')) UNION SELECT target FROM friend WHERE friend.origin = UNHEX(REPLACE(?, '-', ''))) ORDER BY name ASC LIMIT ? OFFSET ?`;
     const count =
       `SELECT COUNT(uuid) AS total FROM person WHERE email LIKE CONCAT(?, '%') AND NOT uuid = UNHEX(REPLACE(?, '-', '')) AND uuid NOT IN ( SELECT origin FROM friend WHERE friend.target = UNHEX(REPLACE(?, '-', '')) UNION SELECT target FROM friend WHERE friend.origin = UNHEX(REPLACE(?, '-', '')))`;
 
@@ -100,9 +100,9 @@ export default class PersonRepository implements InterfaceRepository {
     uuid: string,
   ): Promise<PersonCollection> {
     const fetch =
-      `SELECT HEX(person.uuid) AS uuid, HEX(friend.uuid) AS friend, person.name, person.photo, person.email, person.created, person.updated, person.created, person.updated FROM person INNER JOIN friend ON person.uuid = friend.target OR person.uuid = friend.origin WHERE (friend.target = UNHEX(REPLACE(?, '-', '')) OR friend.origin = UNHEX(REPLACE(?, '-', ''))) AND NOT person.uuid = UNHEX(REPLACE(?, '-', '')) ORDER BY created DESC LIMIT ? OFFSET ?`;
+      `SELECT HEX(person.uuid) AS uuid, HEX(friend.uuid) AS friend, person.name, person.photo, person.email, person.created, person.updated, person.created, person.updated FROM person LEFT JOIN friend ON person.uuid = friend.target OR person.uuid = friend.origin WHERE person.uuid = UNHEX(REPLACE(?, '-', '')) OR friend.target = UNHEX(REPLACE(?, '-', '')) OR friend.origin = UNHEX(REPLACE(?, '-', '')) ORDER BY name ASC LIMIT ? OFFSET ?`;
     const count =
-      `SELECT COUNT(person.uuid) AS total FROM person INNER JOIN friend ON person.uuid = friend.target OR person.uuid = friend.origin WHERE (friend.target = UNHEX(REPLACE(?, '-', '')) OR friend.origin = UNHEX(REPLACE(?, '-', ''))) AND NOT person.uuid = UNHEX(REPLACE(?, '-', ''))`;
+      `SELECT COUNT(person.uuid) AS total FROM person LEFT JOIN friend ON person.uuid = friend.target OR person.uuid = friend.origin WHERE person.uuid = UNHEX(REPLACE(?, '-', '')) OR friend.target = UNHEX(REPLACE(?, '-', '')) OR friend.origin = UNHEX(REPLACE(?, '-', ''))`;
 
     const promises = [
       mysqlClient.execute(fetch, [uuid, uuid, uuid, limit, offset]),
