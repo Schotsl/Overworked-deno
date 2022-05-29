@@ -1,4 +1,3 @@
-import InterfaceMapper from "https://raw.githubusercontent.com/Schotsl/Uberdeno/main/mapper/InterfaceMapper.ts";
 import EntryRepository from "../repository/EntryRepository.ts";
 import { ColumnInfo } from "https://raw.githubusercontent.com/Schotsl/Uberdeno/main/types.ts";
 import {
@@ -6,22 +5,25 @@ import {
   populateInstance,
 } from "https://raw.githubusercontent.com/Schotsl/Uberdeno/main/helper.ts";
 
-import EntryEntity from "../entity/EntryEntity.ts"
+import EntryEntity from "../entity/EntryEntity.ts";
 import OverviewEntity from "../entity/OverviewEntity.ts";
 import OverviewCollection from "../collection/OverviewCollection.ts";
 
-export default class OverviewMapper  {
+export default class OverviewMapper {
   private generalColumns: ColumnInfo[] = [];
   private entryRepository: EntryRepository;
 
   constructor() {
     this.generalColumns = generateColumns(OverviewEntity);
-    this.entryRepository = new EntryRepository('entry');
+    this.entryRepository = new EntryRepository("entry");
   }
 
   // TODO: Allow interface to add any random mapper parameters
 
-  public async mapObject(row: Record<string, never>, persons: string[]): Promise<OverviewEntity> {
+  public async mapObject(
+    row: Record<string, never>,
+    persons: string[],
+  ): Promise<OverviewEntity> {
     const entity = new OverviewEntity();
 
     // Transform strings and numbers into the column wrappers
@@ -32,14 +34,19 @@ export default class OverviewMapper  {
 
     const promiseArray = await persons.map(async (person) => {
       try {
-        return await this.entryRepository.getObjectByPerson(person, uuidString!);
+        return await this.entryRepository.getObjectByPerson(
+          person,
+          uuidString!,
+        );
       } catch {
         return;
       }
     });
 
     const promiseResults = await Promise.all(promiseArray);
-    const promiseFiltered = promiseResults.filter((result) => result !== undefined);
+    const promiseFiltered = promiseResults.filter((result) =>
+      result !== undefined
+    );
 
     // Since we've filtered out the undefineds we can safely cast to EntryEntity
     entity.entries = promiseFiltered as EntryEntity[];
@@ -49,7 +56,7 @@ export default class OverviewMapper  {
 
   public async mapArray(
     rows: Record<string, never>[],
-    persons: string[]
+    persons: string[],
   ): Promise<OverviewEntity[]> {
     // Map the rows into an array of entities
     const overviewsPromise = rows.map((row) => this.mapObject(row, persons));
@@ -63,7 +70,7 @@ export default class OverviewMapper  {
     offset: number,
     limit: number,
     total: number,
-    persons: string[]
+    persons: string[],
   ): Promise<OverviewCollection> {
     const collection = await this.mapArray(rows, persons);
 
