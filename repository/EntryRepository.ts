@@ -81,8 +81,6 @@ export default class EntryRepository implements InterfaceRepository {
     person: string,
     machine: string,
   ): Promise<EntryEntity> {
-    console.log(person)
-    console.log(machine)
     const query =
       "SELECT HEX(uuid) AS uuid, HEX(person) AS person, HEX(machine) AS machine, HEX(location) AS location, speed, weight, upgrade, created, updated FROM entry WHERE person = UNHEX(REPLACE(?, '-', '')) AND machine = UNHEX(REPLACE(?, '-', '')) ORDER BY created LIMIT 1";
     const data = await mysqlClient.execute(query, [person, machine]);
