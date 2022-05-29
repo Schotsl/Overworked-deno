@@ -40,11 +40,12 @@ export default class OverviewRepository implements InterfaceRepository {
     const rows = data[0].rows!;
     const total = data[1].rows![0].total;
 
-    return this.overviewMapper.mapCollection(
+    return await this.overviewMapper.mapCollection(
       rows,
       offset,
       limit,
       total,
+      persons,
     );
   }
 

@@ -1,15 +1,10 @@
-import EntryEntity from "./EntryEntity.ts";
 import {
   SmallColumn,
   VarcharColumn,
 } from "https://raw.githubusercontent.com/Schotsl/Uberdeno/main/other/Columns.ts";
 
-interface Specific {
-  person: string;
-  entry: EntryEntity;
-}
-
 import BaseEntity from "https://raw.githubusercontent.com/Schotsl/Uberdeno/main/entity/BaseEntity.ts";
+import EntryEntity from "./EntryEntity.ts";
 
 export default class OverviewEntity extends BaseEntity {
   public title = new VarcharColumn("title");
@@ -17,7 +12,7 @@ export default class OverviewEntity extends BaseEntity {
   public reps = new SmallColumn("reps", false);
   public sets = new SmallColumn("sets", false);
 
-  public specifics: Specific[] = [];
+  public entries: EntryEntity[] = [];
 
   constructor() {
     super();
