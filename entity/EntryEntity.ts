@@ -6,7 +6,7 @@ import {
 
 import BaseEntity from "https://raw.githubusercontent.com/Schotsl/Uberdeno/main/entity/BaseEntity.ts";
 
-export default class LocationEntity extends BaseEntity {
+export default class EntryEntity extends BaseEntity {
   public person = new UUIDColumn("person");
   public machine = new UUIDColumn("machine");
   public location = new UUIDColumn("location");
