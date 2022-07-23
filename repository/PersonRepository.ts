@@ -1,6 +1,5 @@
 import { UUIDColumn } from "https://raw.githubusercontent.com/Schotsl/Uberdeno/main/other/Columns.ts";
 import { MissingResource } from "https://raw.githubusercontent.com/Schotsl/Uberdeno/main/errors.ts";
-import { MissingImplementation } from "https://raw.githubusercontent.com/Schotsl/Uberdeno/main/errors.ts";
 
 import PersonEntity from "../entity/PersonEntity.ts";
 import PersonCollection from "../collection/PersonCollection.ts";

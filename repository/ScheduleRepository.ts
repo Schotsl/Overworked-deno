@@ -1,5 +1,4 @@
 import { UUIDColumn } from "https://raw.githubusercontent.com/Schotsl/Uberdeno/main/other/Columns.ts";
-import { MissingImplementation } from "https://raw.githubusercontent.com/Schotsl/Uberdeno/main/errors.ts";
 
 import ScheduleEntity from "../entity/ScheduleEntity.ts";
 import ScheduleCollection from "../collection/ScheduleCollection.ts";

@@ -1,5 +1,4 @@
 import { UUIDColumn } from "https://raw.githubusercontent.com/Schotsl/Uberdeno/main/other/Columns.ts";
-import { MissingImplementation } from "https://raw.githubusercontent.com/Schotsl/Uberdeno/main/errors.ts";
 
 import MachineEntity from "../entity/MachineEntity.ts";
 import MachineCollection from "../collection/MachineCollection.ts";
