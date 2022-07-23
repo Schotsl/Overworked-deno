@@ -3,17 +3,15 @@ import {
   VarcharColumn,
 } from "https://raw.githubusercontent.com/Schotsl/Uberdeno/main/other/Columns.ts";
 
-import BaseEntity from "https://raw.githubusercontent.com/Schotsl/Uberdeno/main/entity/BaseEntity.ts";
+import BaseEntity from "../../Uberdeno/entity/BaseEntity.ts";
 
 export default class PersonEntity extends BaseEntity {
+  public photo = new UrlColumn("photo");
   public name = new VarcharColumn("name");
   public email = new VarcharColumn("email");
 
-  public photo = new UrlColumn("photo");
-
-  // TODO: Make property 'friend' readonly
-
-  // public friend = new UUIDColumn("friend", false);
+  // The friend property isn't stored in the database
+  public friend?: string;
 
   constructor() {
     super();
