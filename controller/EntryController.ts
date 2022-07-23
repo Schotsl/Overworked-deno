@@ -66,6 +66,16 @@ export default class EntryController implements InterfaceController {
     return this.generalController.getObject({ response, params });
   }
 
+  updateObject(
+    { request, response, params }: {
+      request: Request;
+      response: Response;
+      params: { uuid: string };
+    },
+  ) {
+    return this.generalController.updateObject({ request, response, params });
+  }
+
   removeObject(
     { response, params }: {
       response: Response;

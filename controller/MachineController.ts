@@ -72,6 +72,16 @@ export default class MachineController implements InterfaceController {
     return this.generalController.removeObject({ response, params });
   }
 
+  updateObject(
+    { request, response, params }: {
+      request: Request;
+      response: Response;
+      params: { uuid: string };
+    },
+  ) {
+    return this.generalController.updateObject({ request, response, params });
+  }
+
   addObject(
     { request, response }: { request: Request; response: Response },
   ) {

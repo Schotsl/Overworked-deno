@@ -106,13 +106,20 @@ export default class PersonController implements InterfaceController {
     response.body = parsed;
   }
 
-  getObject(
+  async getObject(
     { response, params }: {
       response: Response;
       params: { uuid: string };
     },
   ) {
-    return this.generalController.getObject({ response, params });
+    const { uuid } = params;
+
+    validateUUID(uuid, "uuid");
+
+    const result = await this.entryRepository.getObject(uuid);
+    const parsed = renderREST(result);
+
+    response.body = parsed;
   }
 
   removeObject(
@@ -122,6 +129,16 @@ export default class PersonController implements InterfaceController {
     },
   ) {
     return this.generalController.removeObject({ response, params });
+  }
+
+  updateObject(
+    { request, response, params }: {
+      request: Request;
+      response: Response;
+      params: { uuid: string };
+    },
+  ) {
+    return this.generalController.updateObject({ request, response, params });
   }
 
   async addObject(

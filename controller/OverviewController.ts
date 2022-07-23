@@ -51,6 +51,10 @@ export default class OverviewController implements InterfaceController {
     throw new MissingImplementation();
   }
 
+  updateObject() {
+    throw new MissingImplementation();
+  }
+
   removeObject() {
     throw new MissingImplementation();
   }

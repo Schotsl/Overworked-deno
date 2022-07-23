@@ -30,6 +30,40 @@ export default class ScheduleController implements InterfaceController {
     );
   }
 
+  getObject(
+    { response, params }: {
+      response: Response;
+      params: { uuid: string };
+    },
+  ) {
+    return this.generalController.getObject({ response, params });
+  }
+
+  removeObject(
+    { response, params }: {
+      response: Response;
+      params: { uuid: string };
+    },
+  ) {
+    return this.generalController.removeObject({ response, params });
+  }
+
+  addObject(
+    { request, response }: { request: Request; response: Response },
+  ) {
+    return this.generalController.addObject({ request, response });
+  }
+
+  updateObject(
+    { request, response, params }: {
+      request: Request;
+      response: Response;
+      params: { uuid: string };
+    },
+  ) {
+    return this.generalController.updateObject({ request, response, params });
+  }
+
   async getCollection(
     { request, response, state }: {
       request: Request;
@@ -55,29 +89,5 @@ export default class ScheduleController implements InterfaceController {
     const parsed = renderREST(result);
 
     response.body = parsed;
-  }
-
-  getObject(
-    { response, params }: {
-      response: Response;
-      params: { uuid: string };
-    },
-  ) {
-    return this.generalController.getObject({ response, params });
-  }
-
-  removeObject(
-    { response, params }: {
-      response: Response;
-      params: { uuid: string };
-    },
-  ) {
-    return this.generalController.removeObject({ response, params });
-  }
-
-  addObject(
-    { request, response }: { request: Request; response: Response },
-  ) {
-    return this.generalController.addObject({ request, response });
   }
 }
