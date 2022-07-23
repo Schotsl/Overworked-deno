@@ -101,7 +101,7 @@ export default class PersonRepository implements InterfaceRepository {
     const fetch =
       `SELECT HEX(person.uuid) AS uuid, IF(person.uuid = UNHEX(REPLACE(?, '-', '')), NULL, HEX(friend.uuid)) AS friend, person.name, person.photo, person.email, person.created, person.updated, person.created, person.updated FROM person LEFT JOIN friend ON person.uuid = friend.target OR person.uuid = friend.origin WHERE friend.target = UNHEX(REPLACE(?, '-', '')) OR friend.origin = UNHEX(REPLACE(?, '-', '')) GROUP BY person.uuid ORDER BY person.name ASC LIMIT ? OFFSET ?`;
     const count =
-      `SELECT COUNT(person.uuid) AS total  FROM person LEFT JOIN friend ON person.uuid = friend.target OR person.uuid = friend.origin WHERE friend.target = UNHEX(REPLACE(?, '-', '')) OR friend.origin = UNHEX(REPLACE(?, '-', '')) GROUP BY person.uuid`;
+      `SELECT COUNT(person.uuid) AS total FROM person LEFT JOIN friend ON person.uuid = friend.target OR person.uuid = friend.origin WHERE friend.target = UNHEX(REPLACE(?, '-', '')) OR friend.origin = UNHEX(REPLACE(?, '-', '')) GROUP BY person.uuid`;
 
     const promises = [
       mysqlClient.execute(fetch, [uuid, uuid, uuid, limit, offset]),
