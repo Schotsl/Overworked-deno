@@ -1,9 +1,9 @@
 import {
   UrlColumn,
   VarcharColumn,
-} from "../../Uberdeno/other/Columns.ts";
+} from "https://raw.githubusercontent.com/Schotsl/Uberdeno/main/other/Columns.ts";
 
-import BaseEntity from "../../Uberdeno/entity/BaseEntity.ts";
+import BaseEntity from "https://raw.githubusercontent.com/Schotsl/Uberdeno/main/entity/BaseEntity.ts";
 
 export default class PersonEntity extends BaseEntity {
   public name = new VarcharColumn("name");
