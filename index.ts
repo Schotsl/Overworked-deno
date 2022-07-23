@@ -23,5 +23,3 @@ server.add(personRouter);
 server.add(entryRouter);
 
 server.listen();
-
-console.log("Ruh-roh, I'm running!");
