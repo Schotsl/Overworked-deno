@@ -69,8 +69,8 @@ export default class EntryRepository implements InterfaceRepository {
     return await this.generalRepository.addObject(object) as EntryEntity;
   }
 
-  public updateObject(): Promise<EntryEntity> {
-    throw new MissingImplementation();
+  public async updateObject(object: EntryEntity): Promise<EntryEntity> {
+    return await this.generalRepository.updateObject(object) as EntryEntity;
   }
 
   public async getObject(uuid: UUIDColumn): Promise<EntryEntity> {

@@ -65,8 +65,8 @@ export default class MachineRepository implements InterfaceRepository {
     return await this.generalRepository.addObject(object) as MachineEntity;
   }
 
-  public updateObject(): Promise<MachineEntity> {
-    throw new MissingImplementation();
+  public async updateObject(object: MachineEntity): Promise<MachineEntity> {
+    return await this.generalRepository.updateObject(object) as MachineEntity;
   }
 
   public async getObject(uuid: UUIDColumn): Promise<MachineEntity> {

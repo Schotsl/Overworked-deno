@@ -60,8 +60,8 @@ export default class ScheduleRepository implements InterfaceRepository {
     return await this.generalRepository.addObject(object) as ScheduleEntity;
   }
 
-  public updateObject(): Promise<ScheduleEntity> {
-    throw new MissingImplementation();
+  public async updateObject(object: ScheduleEntity): Promise<ScheduleEntity> {
+    return await this.generalRepository.addObject(object) as ScheduleEntity;
   }
 
   public async getObject(uuid: UUIDColumn): Promise<ScheduleEntity> {

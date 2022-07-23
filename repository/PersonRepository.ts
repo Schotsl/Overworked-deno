@@ -129,8 +129,8 @@ export default class PersonRepository implements InterfaceRepository {
     return await this.generalRepository.addObject(object) as PersonEntity;
   }
 
-  public updateObject(): Promise<PersonEntity> {
-    throw new MissingImplementation();
+  public async updateObject(object: PersonEntity): Promise<PersonEntity> {
+    return await this.generalRepository.updateObject(object) as PersonEntity;
   }
 
   public async getObject(uuid: UUIDColumn): Promise<PersonEntity> {
